@@ -1,1 +1,278 @@
+/*
+=========================================================
+03 - TYPE CONVERSION & TYPE COERCION
+=========================================================
 
+This file covers:
+
+1) What is Type Conversion?
+2) What is Type Coercion?
+3) Implicit vs Explicit conversion
+4) How JavaScript behaves internally
+5) Truthy and Falsy values
+6) Special cases
+7) Interview Questions
+=========================================================
+*/
+
+
+/* =========================================================
+1️⃣ WHAT IS TYPE CONVERSION?
+=========================================================
+
+Type Conversion means manually converting
+one data type into another.
+
+Also called:
+Explicit Conversion
+
+We control it.
+JavaScript does NOT decide automatically.
+*/
+
+
+/* -------------------------------
+STRING CONVERSION
+-------------------------------- */
+
+let num = 100;
+
+let str1 = String(num);   // Method 1
+let str2 = num.toString(); // Method 2
+
+console.log(str1); // "100"
+console.log(typeof str1); // string
+
+
+
+/* -------------------------------
+NUMBER CONVERSION
+-------------------------------- */
+
+let str = "50";
+
+let number1 = Number(str);  // Method 1
+let number2 = +str;         // Unary plus operator
+
+console.log(number1); // 50
+console.log(typeof number1); // number
+
+
+/* If conversion fails */
+
+let invalid = Number("abc");
+console.log(invalid); // NaN (Not a Number)
+
+
+
+/* -------------------------------
+BOOLEAN CONVERSION
+-------------------------------- */
+
+console.log(Boolean(1));      // true
+console.log(Boolean(0));      // false
+console.log(Boolean(""));     // false
+console.log(Boolean("Hello")); // true
+
+
+
+/* =========================================================
+2️⃣ WHAT IS TYPE COERCION?
+=========================================================
+
+Type Coercion means automatic type conversion
+done by JavaScript.
+
+Also called:
+Implicit Conversion
+
+We do NOT control it.
+JavaScript decides based on context.
+*/
+
+
+/* -------------------------------
+STRING COERCION
+-------------------------------- */
+
+console.log("5" + 2); 
+// "52" (number converted to string)
+
+console.log(5 + "2");
+// "52"
+
+
+/* Why?
+Because + operator prefers string concatenation
+if one operand is string.
+*/
+
+
+/* -------------------------------
+NUMERIC COERCION
+-------------------------------- */
+
+console.log("5" - 2);  // 3
+console.log("10" * 2); // 20
+console.log("20" / 4); // 5
+
+/*
+Here JavaScript converts string to number automatically
+because -, *, / only work with numbers.
+*/
+
+
+/* =========================================================
+IMPORTANT BEHAVIOR RULE
+=========================================================
+
++  → prefers STRING
+-  → converts to NUMBER
+*  → converts to NUMBER
+/  → converts to NUMBER
+*/
+
+
+/* =========================================================
+3️⃣ TRUTHY AND FALSY VALUES
+=========================================================
+
+Falsy values in JavaScript:
+
+false
+0
+-0
+0n
+""
+null
+undefined
+NaN
+
+Everything else is Truthy.
+*/
+
+
+if ("Hello") {
+  console.log("Truthy");
+}
+
+if (0) {
+  console.log("Won't run");
+}
+
+
+
+/* =========================================================
+4️⃣ SPECIAL CASES (VERY IMPORTANT)
+========================================================= */
+
+console.log(null + 1);      // 1
+console.log(undefined + 1); // NaN
+
+/*
+null → converted to 0
+undefined → converted to NaN
+*/
+
+
+console.log(true + 1);  // 2
+console.log(false + 1); // 1
+
+// true = 1
+// false = 0
+
+
+
+/* =========================================================
+5️⃣ == vs === (COERCION DIFFERENCE)
+=========================================================
+
+==  → Allows type coercion
+=== → Strict comparison (no coercion)
+*/
+
+console.log(5 == "5");   // true
+console.log(5 === "5");  // false
+
+
+/*
+Best Practice:
+Always use ===
+*/
+
+
+/* =========================================================
+6️⃣ HOW DATA TYPES CHANGE
+=========================================================
+
+String → Number
+Number → String
+Boolean → Number
+Null → Number (0)
+Undefined → NaN
+Object → Primitive (via valueOf / toString)
+*/
+
+
+/* =========================================================
+7️⃣ SUMMARY
+=========================================================
+
+Type Conversion:
+Manual
+Controlled
+Predictable
+
+Type Coercion:
+Automatic
+Happens internally
+Can cause confusion
+
+Always prefer explicit conversion for clarity.
+=========================================================
+*/
+
+
+/* =========================================================
+PRACTICE QUESTIONS
+=========================================================
+
+Q1: What is the difference between
+    Type Conversion and Type Coercion?
+
+------------------------------------------
+
+Q2: What will be the output?
+
+console.log("10" + 5);
+
+------------------------------------------
+
+Q3: What will be the output?
+
+console.log("10" - 5);
+
+------------------------------------------
+
+Q4: Why does null + 1 return 1?
+
+------------------------------------------
+
+Q5: What is the difference between
+    == and === ?
+
+------------------------------------------
+
+Q6: List all falsy values in JavaScript.
+
+------------------------------------------
+
+Q7: What will be the output?
+
+console.log(true + false + "5");
+
+------------------------------------------
+
+Try solving before running the code.
+=========================================================
+*/
