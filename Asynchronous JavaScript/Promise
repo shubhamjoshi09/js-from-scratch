@@ -1,1 +1,269 @@
+/*
+=========================================================
+08 - PROMISES IN JAVASCRIPT (COMPLETE GUIDE)
+=========================================================
 
+This file covers:
+
+1) What is a Promise?
+2) Creating a Promise
+3) Consuming a Promise
+4) Promise States
+5) Promise Chaining
+6) Error Handling
+7) Real-world example
+8) Promise methods
+9) Interview Questions
+=========================================================
+*/
+
+
+/* =========================================================
+1️⃣ WHAT IS A PROMISE?
+=========================================================
+
+A Promise is an object that represents
+the eventual completion or failure
+of an asynchronous operation.
+
+"Future value ka placeholder"
+*/
+
+
+/* =========================================================
+2️⃣ CREATING A PROMISE
+========================================================= */
+
+const myPromise = new Promise((resolve, reject) => {
+  let success = true;
+
+  if (success) {
+    resolve("Task Completed");
+  } else {
+    reject("Task Failed");
+  }
+});
+
+
+/* =========================================================
+3️⃣ CONSUMING A PROMISE
+========================================================= */
+
+myPromise
+  .then((result) => {
+    console.log("Success:", result);
+  })
+  .catch((error) => {
+    console.log("Error:", error);
+  });
+
+
+/* =========================================================
+4️⃣ PROMISE STATES
+=========================================================
+
+1) Pending   → Initial state
+2) Fulfilled → resolve() called
+3) Rejected  → reject() called
+*/
+
+
+/* =========================================================
+5️⃣ PROMISE CHAINING
+========================================================= */
+
+new Promise((resolve) => {
+  resolve(2);
+})
+  .then((num) => {
+    return num * 2;
+  })
+  .then((num) => {
+    return num * 3;
+  })
+  .then((result) => {
+    console.log("Chained Result:", result); // 12
+  });
+
+
+/* =========================================================
+6️⃣ ERROR HANDLING
+========================================================= */
+
+new Promise((resolve, reject) => {
+  reject("Something went wrong");
+})
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log("Caught Error:", err);
+  });
+
+
+/* =========================================================
+7️⃣ REAL WORLD EXAMPLE (API SIMULATION)
+========================================================= */
+
+function fetchData() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Data fetched from server");
+    }, 2000);
+  });
+}
+
+fetchData().then((data) => console.log(data));
+
+
+/* =========================================================
+8️⃣ PROMISE METHODS
+========================================================= */
+
+
+/* -------------------------
+Promise.all()
+-------------------------- */
+
+Promise.all([
+  Promise.resolve(1),
+  Promise.resolve(2),
+  Promise.resolve(3)
+]).then((result) => {
+  console.log("Promise.all:", result); // [1, 2, 3]
+});
+
+
+/* -------------------------
+Promise.race()
+-------------------------- */
+
+Promise.race([
+  new Promise((res) => setTimeout(() => res("Fast"), 1000)),
+  new Promise((res) => setTimeout(() => res("Slow"), 2000))
+]).then((result) => {
+  console.log("Promise.race:", result); // Fast
+});
+
+
+/* -------------------------
+Promise.allSettled()
+-------------------------- */
+
+Promise.allSettled([
+  Promise.resolve("Success"),
+  Promise.reject("Error")
+]).then((result) => {
+  console.log("Promise.allSettled:", result);
+});
+
+
+/* =========================================================
+9️⃣ IMPORTANT NOTES
+=========================================================
+
+✔ Promise executes immediately
+✔ .then() handles success
+✔ .catch() handles errors
+✔ Always return value in chaining
+*/
+
+
+/* =========================================================
+🔟 COMMON MISTAKE
+========================================================= */
+
+//  Missing return
+new Promise((resolve) => resolve(5))
+  .then((num) => {
+    num * 2; // no return
+  })
+  .then((result) => {
+    console.log(result); // undefined
+  });
+
+
+// ✔ Correct
+new Promise((resolve) => resolve(5))
+  .then((num) => {
+    return num * 2;
+  })
+  .then((result) => {
+    console.log(result); // 10
+  });
+
+
+/* =========================================================
+SUMMARY
+=========================================================
+
+Promise:
+✔ Handles async operations
+✔ Avoids callback hell
+✔ Supports chaining
+✔ Better error handling
+
+=========================================================
+*/
+
+
+/* =========================================================
+INTERVIEW QUESTIONS + ANSWERS
+=========================================================
+
+Q1: What is a Promise?
+
+Answer:
+An object representing future completion or failure.
+
+
+--------------------------------------------
+
+
+Q2: What are Promise states?
+
+Answer:
+Pending, Fulfilled, Rejected
+
+
+--------------------------------------------
+
+
+Q3: What does resolve() do?
+
+Answer:
+Moves promise to fulfilled state.
+
+
+--------------------------------------------
+
+
+Q4: What does reject() do?
+
+Answer:
+Moves promise to rejected state.
+
+
+--------------------------------------------
+
+
+Q5: What is Promise chaining?
+
+Answer:
+Using multiple .then() calls sequentially.
+
+
+--------------------------------------------
+
+
+Q6: Difference between Promise.all and Promise.race?
+
+Answer:
+Promise.all → waits for all
+Promise.race → returns fastest
+
+
+=========================================================
+END OF FILE
+=========================================================
+*/
