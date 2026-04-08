@@ -1,0 +1,263 @@
+/*
+=========================================================
+09 - ASYNC / AWAIT IN JAVASCRIPT (COMPLETE GUIDE)
+=========================================================
+
+This file covers:
+
+1) What is Async/Await?
+2) Async function
+3) Await keyword
+4) Handling Promises with async/await
+5) Error handling (try/catch)
+6) Real-world examples
+7) Multiple async calls
+8) Parallel vs Sequential execution
+9) Interview Questions
+=========================================================
+*/
+
+
+/* =========================================================
+1️⃣ WHAT IS ASYNC / AWAIT?
+=========================================================
+
+Async/Await is a modern way to handle asynchronous code.
+
+It makes async code look like synchronous code
+
+✔ Built on top of Promises
+✔ Cleaner and more readable
+*/
+
+
+/* =========================================================
+2️⃣ ASYNC FUNCTION
+========================================================= */
+
+async function greet() {
+  return "Hello";
+}
+
+greet().then((res) => console.log(res));
+
+/*
+✔ Async function always returns a Promise
+*/
+
+
+/* =========================================================
+3️⃣ AWAIT KEYWORD
+========================================================= */
+
+function getData() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("Data received"), 2000);
+  });
+}
+
+async function fetchData() {
+  const data = await getData();
+  console.log(data);
+}
+
+fetchData();
+
+/*
+✔ await pauses execution until Promise resolves
+*/
+
+
+/* =========================================================
+4️⃣ USING ASYNC/AWAIT WITH PROMISE
+========================================================= */
+
+function getUser() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("User Data"), 1000);
+  });
+}
+
+async function showUser() {
+  const user = await getUser();
+  console.log(user);
+}
+
+showUser();
+
+
+/* =========================================================
+5️⃣ ERROR HANDLING (TRY / CATCH)
+========================================================= */
+
+function getError() {
+  return new Promise((_, reject) => {
+    setTimeout(() => reject("Error occurred"), 1000);
+  });
+}
+
+async function handleError() {
+  try {
+    const data = await getError();
+    console.log(data);
+  } catch (error) {
+    console.log("Caught:", error);
+  }
+}
+
+handleError();
+
+
+/* =========================================================
+6️⃣ REAL WORLD EXAMPLE (API SIMULATION)
+========================================================= */
+
+function fetchPosts() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("Posts Data"), 1000);
+  });
+}
+
+async function displayPosts() {
+  console.log("Fetching posts...");
+  const posts = await fetchPosts();
+  console.log(posts);
+}
+
+displayPosts();
+
+
+/* =========================================================
+7️⃣ MULTIPLE ASYNC CALLS (SEQUENTIAL)
+========================================================= */
+
+async function sequentialExample() {
+  const a = await getUser();
+  const b = await fetchPosts();
+
+  console.log(a);
+  console.log(b);
+}
+
+sequentialExample();
+
+/*
+✔ Runs one after another (slower)
+*/
+
+
+/* =========================================================
+8️⃣ PARALLEL EXECUTION (IMPORTANT)
+========================================================= */
+
+async function parallelExample() {
+  const results = await Promise.all([
+    getUser(),
+    fetchPosts()
+  ]);
+
+  console.log(results);
+}
+
+parallelExample();
+
+/*
+✔ Runs simultaneously (faster)
+*/
+
+
+/* =========================================================
+9️⃣ IMPORTANT NOTES
+=========================================================
+
+✔ async always returns Promise
+✔ await works only inside async
+✔ await pauses execution (non-blocking)
+✔ use try/catch for errors
+*/
+
+
+/* =========================================================
+🔟 COMMON MISTAKES
+========================================================= */
+
+//  Using await outside async
+// const data = await getUser(); 
+
+
+//  Not handling errors properly
+
+
+/* =========================================================
+SUMMARY
+=========================================================
+
+Async/Await:
+✔ Cleaner syntax for Promises
+✔ Easy to read
+✔ Handles async operations efficiently
+
+=========================================================
+*/
+
+
+/* =========================================================
+INTERVIEW QUESTIONS + ANSWERS
+=========================================================
+
+Q1: What is async?
+
+Answer:
+A keyword that makes function return a Promise.
+
+
+--------------------------------------------
+
+
+Q2: What does await do?
+
+Answer:
+Waits for Promise to resolve.
+
+
+--------------------------------------------
+
+
+Q3: Can we use await without async?
+
+Answer:
+No (only inside async functions)
+
+
+--------------------------------------------
+
+
+Q4: How to handle errors in async/await?
+
+Answer:
+Using try/catch block.
+
+
+--------------------------------------------
+
+
+Q5: Difference between Promise and async/await?
+
+Answer:
+Async/await is cleaner syntax over Promises.
+
+
+--------------------------------------------
+
+
+Q6: Sequential vs Parallel execution?
+
+Answer:
+Sequential → one by one
+Parallel → runs together using Promise.all
+
+
+=========================================================
+END OF FILE
+=========================================================
+*/
