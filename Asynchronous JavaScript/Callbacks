@@ -1,1 +1,232 @@
+/*
+=========================================================
+07 - CALLBACKS IN JAVASCRIPT (COMPLETE GUIDE)
+=========================================================
 
+This file covers:
+
+1) What is a Callback?
+2) Basic Example
+3) Callback with Parameters
+4) Inline Callback
+5) Arrow Callback
+6) Real-world examples
+7) Async callbacks
+8) Callback Hell
+9) Interview Questions
+=========================================================
+*/
+
+
+/* =========================================================
+1️⃣ WHAT IS A CALLBACK?
+=========================================================
+
+A callback is a function passed as an argument
+to another function and executed later.
+
+Function inside function (as argument)
+*/
+
+
+/* =========================================================
+2️⃣ BASIC EXAMPLE
+========================================================= */
+
+function greet() {
+  console.log("Hello");
+}
+
+function processUser(callback) {
+  callback(); // executing callback
+}
+
+processUser(greet);
+
+
+
+/* =========================================================
+3️⃣ CALLBACK WITH PARAMETERS
+========================================================= */
+
+function calculate(a, b, operation) {
+  return operation(a, b);
+}
+
+function add(x, y) {
+  return x + y;
+}
+
+function multiply(x, y) {
+  return x * y;
+}
+
+console.log(calculate(2, 3, add));      // 5
+console.log(calculate(2, 3, multiply)); // 6
+
+
+
+/* =========================================================
+4️⃣ INLINE CALLBACK
+========================================================= */
+
+calculate(5, 5, function (x, y) {
+  console.log(x - y);
+});
+
+
+
+/* =========================================================
+5️⃣ ARROW FUNCTION CALLBACK
+========================================================= */
+
+calculate(10, 2, (x, y) => x / y);
+
+
+
+/* =========================================================
+6️⃣ REAL WORLD EXAMPLE
+========================================================= */
+
+const numbers = [1, 2, 3, 4];
+
+numbers.forEach(function (num) {
+  console.log(num);
+});
+
+/*
+forEach uses callback internally
+*/
+
+
+/* =========================================================
+7️⃣ ASYNC CALLBACK (IMPORTANT)
+========================================================= */
+
+setTimeout(function () {
+  console.log("Runs after 2 seconds");
+}, 2000);
+
+/*
+Used in:
+✔ API calls
+✔ Timers
+✔ Event handling
+*/
+
+
+/* =========================================================
+8️⃣ CALLBACK HELL (PROBLEM)
+========================================================= */
+
+setTimeout(() => {
+  console.log("Step 1");
+
+  setTimeout(() => {
+    console.log("Step 2");
+
+    setTimeout(() => {
+      console.log("Step 3");
+    }, 1000);
+
+  }, 1000);
+
+}, 1000);
+
+/*
+Problems:
+Hard to read
+Hard to maintain
+
+Solution:
+Promises
+Async/Await
+*/
+
+
+/* =========================================================
+9️⃣ WHY CALLBACKS ARE IMPORTANT
+=========================================================
+
+Control execution flow
+Enable async programming
+Make functions reusable
+Used in HOF (map, filter, forEach)
+*/
+
+
+/* =========================================================
+SUMMARY
+=========================================================
+
+Callback:
+✔ Function passed as argument
+✔ Executed later
+
+Used in:
+Async JS
+Event handling
+Functional programming
+
+=========================================================
+*/
+
+
+/* =========================================================
+INTERVIEW QUESTIONS + ANSWERS
+=========================================================
+
+Q1: What is a callback?
+
+Answer:
+A function passed as an argument to another function.
+
+
+--------------------------------------------
+
+
+Q2: Why use callbacks?
+
+Answer:
+To control execution and handle async tasks.
+
+
+--------------------------------------------
+
+
+Q3: What is callback hell?
+
+Answer:
+Nested callbacks making code unreadable.
+
+
+--------------------------------------------
+
+
+Q4: What will be output?
+
+function test(cb) {
+  cb();
+}
+
+test(function () {
+  console.log("Hello");
+});
+
+Answer:
+Hello
+
+
+--------------------------------------------
+
+
+Q5: Difference between callback and normal function?
+
+Answer:
+Callback is passed and executed later.
+
+
+=========================================================
+END OF FILE
+=========================================================
+*/
