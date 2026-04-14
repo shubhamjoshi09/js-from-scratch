@@ -1,0 +1,593 @@
+/*
+=========================================================
+10 - EVENT LOOP IN JAVASCRIPT (COMPLETE GUIDE)
+=========================================================
+
+This file covers:
+
+1) What is Event Loop?
+2) Call Stack
+3) Web APIs
+4) Callback Queue
+5) Microtask Queue
+6) Execution Flow
+7) setTimeout vs Promise
+8) Real Examples
+9) Interview Questions
+=========================================================
+*/
+
+
+/* =========================================================
+1️⃣ WHAT IS EVENT LOOP?
+=========================================================
+
+Event Loop is the mechanism
+that allows JavaScript to handle async operations.
+
+It continuously checks:
+"Is Call Stack empty?"
+
+If YES → moves tasks from queue to stack
+*/
+
+
+/* =========================================================
+2️⃣ MAIN COMPONENTS
+=========================================================
+
+JavaScript Runtime has:
+
+✔ Call Stack → Executes functions
+✔ Web APIs → Handles async tasks (browser)
+✔ Callback Queue → Stores callbacks (setTimeout)
+✔ Microtask Queue → Stores promises (HIGH PRIORITY)
+✔ Event Loop → Manages everything
+*/
+
+
+/* =========================================================
+3️⃣ CALL STACK (SYNC CODE)
+========================================================= */
+
+function one() {
+  console.log("One");
+}
+
+function two() {
+  console.log("Two");
+}
+
+one();
+two();
+
+/*
+Call Stack executes synchronously (line by line)
+*/
+
+
+/* =========================================================
+4️⃣ ASYNC EXAMPLE (setTimeout)
+========================================================= */
+
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Timeout");
+}, 0);
+
+console.log("End");
+
+/*
+Output:
+Start
+End
+Timeout
+
+Why?
+
+setTimeout goes to Web API → Callback Queue
+Event Loop pushes it AFTER stack is empty
+*/
+
+
+/* =========================================================
+5️⃣ PROMISE (MICROTASK QUEUE)
+========================================================= */
+
+console.log("Start");
+
+Promise.resolve().then(() => {
+  console.log("Promise");
+});
+
+console.log("End");
+
+/*
+Output:
+Start
+End
+Promise
+
+Promise callbacks go to Microtask Queue
+(priority > callback queue)
+*/
+
+
+/* =========================================================
+6️⃣ SETTIMEOUT VS PROMISE (IMPORTANT)
+========================================================= */
+
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Timeout");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("Promise");
+});
+
+console.log("End");
+
+/*
+Output:
+Start
+End
+Promise
+Timeout
+
+Microtask runs before Callback Queue
+*/
+
+
+/* =========================================================
+7️⃣ EXECUTION FLOW STEP-BY-STEP
+=========================================================
+
+1) Global code → Call Stack
+2) Async code → Web APIs
+3) Promise → Microtask Queue
+4) setTimeout → Callback Queue
+5) Event Loop checks:
+   - First Microtask Queue
+   - Then Callback Queue
+*/
+
+
+/* =========================================================
+8️⃣ COMPLEX EXAMPLE
+========================================================= */
+
+console.log("1");
+
+setTimeout(() => {
+  console.log("2");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("3");
+});
+
+console.log("4");
+
+/*
+Output:
+1
+4
+3
+2
+*/
+
+
+/* =========================================================
+9️⃣ REAL UNDERSTANDING
+=========================================================
+
+Priority Order:
+
+1️⃣ Call Stack (sync code)
+2️⃣ Microtask Queue (Promises)
+3️⃣ Callback Queue (setTimeout)
+
+Event Loop ensures this order
+*/
+
+
+/* =========================================================
+🔟 VISUAL FLOW
+=========================================================
+
+Call Stack
+   ↓
+Web APIs
+   ↓
+Queues
+   ↓
+Event Loop
+   ↓
+Back to Call Stack
+*/
+
+
+/* =========================================================
+IMPORTANT NOTES
+=========================================================
+
+✔ JS is single-threaded
+✔ Async handled via Event Loop
+✔ Promise has higher priority than setTimeout
+✔ setTimeout 0ms ≠ immediate execution
+*/
+
+
+/* =========================================================
+SUMMARY
+=========================================================
+
+Event Loop:
+✔ Manages async execution
+✔ Moves tasks to Call Stack
+✔ Prioritizes Microtasks over Callbacks
+
+=========================================================
+*/
+
+
+/* =========================================================
+INTERVIEW QUESTIONS + ANSWERS
+=========================================================
+
+Q1: What is Event Loop?
+
+Answer:
+A mechanism that handles async operations.
+
+
+--------------------------------------------
+
+
+Q2: What is Call Stack?
+
+Answer:
+Executes synchronous code.
+
+
+--------------------------------------------
+
+
+Q3: Difference between Microtask & Callback Queue?
+
+Answer:
+Microtask (Promise) has higher priority.
+
+
+--------------------------------------------
+
+
+Q4: What will be output?
+
+console.log("A");
+
+setTimeout(() => console.log("B"), 0);
+
+Promise.resolve().then(() => console.log("C"));
+
+console.log("D");
+
+Answer:
+A
+D
+C
+B
+
+
+--------------------------------------------
+
+
+Q5: Why Promise runs before setTimeout?
+
+Answer:
+Because it is in Microtask Queue (higher priority)
+
+
+=========================================================
+END OF FILE
+=========================================================
+*//*
+=========================================================
+10 - EVENT LOOP IN JAVASCRIPT (COMPLETE GUIDE)
+=========================================================
+
+This file covers:
+
+1) What is Event Loop?
+2) Call Stack
+3) Web APIs
+4) Callback Queue
+5) Microtask Queue
+6) Execution Flow
+7) setTimeout vs Promise
+8) Real Examples
+9) Interview Questions
+=========================================================
+*/
+
+
+/* =========================================================
+1️⃣ WHAT IS EVENT LOOP?
+=========================================================
+
+Event Loop is the mechanism
+that allows JavaScript to handle async operations.
+
+It continuously checks:
+"Is Call Stack empty?"
+
+If YES → moves tasks from queue to stack
+*/
+
+
+/* =========================================================
+2️⃣ MAIN COMPONENTS
+=========================================================
+
+JavaScript Runtime has:
+
+✔ Call Stack → Executes functions
+✔ Web APIs → Handles async tasks (browser)
+✔ Callback Queue → Stores callbacks (setTimeout)
+✔ Microtask Queue → Stores promises (HIGH PRIORITY)
+✔ Event Loop → Manages everything
+*/
+
+
+/* =========================================================
+3️⃣ CALL STACK (SYNC CODE)
+========================================================= */
+
+function one() {
+  console.log("One");
+}
+
+function two() {
+  console.log("Two");
+}
+
+one();
+two();
+
+/*
+Call Stack executes synchronously (line by line)
+*/
+
+
+/* =========================================================
+4️⃣ ASYNC EXAMPLE (setTimeout)
+========================================================= */
+
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Timeout");
+}, 0);
+
+console.log("End");
+
+/*
+Output:
+Start
+End
+Timeout
+
+Why?
+
+setTimeout goes to Web API → Callback Queue
+Event Loop pushes it AFTER stack is empty
+*/
+
+
+/* =========================================================
+5️⃣ PROMISE (MICROTASK QUEUE)
+========================================================= */
+
+console.log("Start");
+
+Promise.resolve().then(() => {
+  console.log("Promise");
+});
+
+console.log("End");
+
+/*
+Output:
+Start
+End
+Promise
+
+Promise callbacks go to Microtask Queue
+(priority > callback queue)
+*/
+
+
+/* =========================================================
+6️⃣ SETTIMEOUT VS PROMISE (IMPORTANT)
+========================================================= */
+
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Timeout");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("Promise");
+});
+
+console.log("End");
+
+/*
+Output:
+Start
+End
+Promise
+Timeout
+
+Microtask runs before Callback Queue
+*/
+
+
+/* =========================================================
+7️⃣ EXECUTION FLOW STEP-BY-STEP
+=========================================================
+
+1) Global code → Call Stack
+2) Async code → Web APIs
+3) Promise → Microtask Queue
+4) setTimeout → Callback Queue
+5) Event Loop checks:
+   - First Microtask Queue
+   - Then Callback Queue
+*/
+
+
+/* =========================================================
+8️⃣ COMPLEX EXAMPLE
+========================================================= */
+
+console.log("1");
+
+setTimeout(() => {
+  console.log("2");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("3");
+});
+
+console.log("4");
+
+/*
+Output:
+1
+4
+3
+2
+*/
+
+
+/* =========================================================
+9️⃣ REAL UNDERSTANDING
+=========================================================
+
+Priority Order:
+
+1️⃣ Call Stack (sync code)
+2️⃣ Microtask Queue (Promises)
+3️⃣ Callback Queue (setTimeout)
+
+Event Loop ensures this order
+*/
+
+
+/* =========================================================
+🔟 VISUAL FLOW
+=========================================================
+
+Call Stack
+   ↓
+Web APIs
+   ↓
+Queues
+   ↓
+Event Loop
+   ↓
+Back to Call Stack
+*/
+
+
+/* =========================================================
+IMPORTANT NOTES
+=========================================================
+
+✔ JS is single-threaded
+✔ Async handled via Event Loop
+✔ Promise has higher priority than setTimeout
+✔ setTimeout 0ms ≠ immediate execution
+*/
+
+
+/* =========================================================
+SUMMARY
+=========================================================
+
+Event Loop:
+✔ Manages async execution
+✔ Moves tasks to Call Stack
+✔ Prioritizes Microtasks over Callbacks
+
+=========================================================
+*/
+
+
+/* =========================================================
+INTERVIEW QUESTIONS + ANSWERS
+=========================================================
+
+Q1: What is Event Loop?
+
+Answer:
+A mechanism that handles async operations.
+
+
+--------------------------------------------
+
+
+Q2: What is Call Stack?
+
+Answer:
+Executes synchronous code.
+
+
+--------------------------------------------
+
+
+Q3: Difference between Microtask & Callback Queue?
+
+Answer:
+Microtask (Promise) has higher priority.
+
+
+--------------------------------------------
+
+
+Q4: What will be output?
+
+console.log("A");
+
+setTimeout(() => console.log("B"), 0);
+
+Promise.resolve().then(() => console.log("C"));
+
+console.log("D");
+
+Answer:
+A
+D
+C
+B
+
+
+--------------------------------------------
+
+
+Q5: Why Promise runs before setTimeout?
+
+Answer:
+Because it is in Microtask Queue (higher priority)
+
+
+=========================================================
+END OF FILE
+=========================================================
+*/
