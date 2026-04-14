@@ -1,0 +1,268 @@
+/*
+=========================================================
+11 - MICROTASK QUEUE vs MACROTASK QUEUE
+=========================================================
+
+This file covers:
+
+1) What is Microtask Queue?
+2) What is Macrotask Queue?
+3) Key Differences
+4) Execution Priority
+5) Examples
+6) Tricky Questions
+=========================================================
+*/
+
+
+/* =========================================================
+1️⃣ WHAT IS MICROTASK QUEUE?
+=========================================================
+
+Microtask Queue stores:
+
+✔ Promise callbacks (.then, .catch)
+✔ queueMicrotask()
+
+HIGH PRIORITY queue
+*/
+
+
+/* =========================================================
+2️⃣ WHAT IS MACROTASK QUEUE?
+=========================================================
+
+Macrotask Queue (Callback Queue) stores:
+
+✔ setTimeout
+✔ setInterval
+✔ setImmediate (Node.js)
+✔ DOM events
+
+LOWER PRIORITY than microtask
+*/
+
+
+/* =========================================================
+3️⃣ EXECUTION PRIORITY
+=========================================================
+
+Order of execution:
+
+1️⃣ Call Stack (Sync code)
+2️⃣ Microtask Queue (Promises)
+3️⃣ Macrotask Queue (setTimeout)
+
+Event Loop follows this order
+*/
+
+
+/* =========================================================
+4️⃣ BASIC EXAMPLE
+========================================================= */
+
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Macrotask");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("Microtask");
+});
+
+console.log("End");
+
+/*
+Output:
+Start
+End
+Microtask
+Macrotask
+*/
+
+
+/* =========================================================
+5️⃣ WHY MICROTASK RUNS FIRST?
+=========================================================
+
+Because Event Loop always clears
+Microtask Queue BEFORE Macrotask Queue
+*/
+
+
+/* =========================================================
+6️⃣ MULTIPLE MICROTASKS
+========================================================= */
+
+console.log("A");
+
+Promise.resolve().then(() => console.log("B"));
+Promise.resolve().then(() => console.log("C"));
+
+console.log("D");
+
+/*
+Output:
+A
+D
+B
+C
+*/
+
+
+/* =========================================================
+7️⃣ COMPLEX EXAMPLE
+========================================================= */
+
+console.log("1");
+
+setTimeout(() => {
+  console.log("2");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("3");
+});
+
+Promise.resolve().then(() => {
+  console.log("4");
+});
+
+console.log("5");
+
+/*
+Output:
+1
+5
+3
+4
+2
+*/
+
+
+/* =========================================================
+8️⃣ MICROTASK INSIDE MACROTASK
+========================================================= */
+
+setTimeout(() => {
+  console.log("Timeout Start");
+
+  Promise.resolve().then(() => {
+    console.log("Microtask inside Timeout");
+  });
+
+  console.log("Timeout End");
+}, 0);
+
+/*
+Output:
+Timeout Start
+Timeout End
+Microtask inside Timeout
+*/
+
+
+/* =========================================================
+9️⃣ IMPORTANT RULE
+=========================================================
+
+After every macrotask,
+Event Loop runs ALL microtasks first
+before moving to next macrotask
+*/
+
+
+/* =========================================================
+🔟 REAL UNDERSTANDING
+=========================================================
+
+Think like:
+
+Microtask → urgent work
+Macrotask → normal work
+
+Event Loop always completes urgent work first
+*/
+
+
+/* =========================================================
+SUMMARY
+=========================================================
+
+Microtask Queue:
+✔ Promise callbacks
+✔ Higher priority
+
+Macrotask Queue:
+✔ setTimeout, events
+✔ Lower priority
+
+Execution Order:
+Sync → Microtask → Macrotask
+
+=========================================================
+*/
+
+
+/* =========================================================
+INTERVIEW QUESTIONS
+=========================================================
+
+Q1: What is Microtask Queue?
+
+Answer:
+Queue for Promise callbacks (high priority)
+
+
+--------------------------------------------
+
+
+Q2: What is Macrotask Queue?
+
+Answer:
+Queue for setTimeout, events (low priority)
+
+
+--------------------------------------------
+
+
+Q3: Which runs first?
+
+Answer:
+Microtask Queue
+
+
+--------------------------------------------
+
+
+Q4: What will be output?
+
+console.log("A");
+
+setTimeout(() => console.log("B"), 0);
+
+Promise.resolve().then(() => console.log("C"));
+
+console.log("D");
+
+Answer:
+A
+D
+C
+B
+
+
+--------------------------------------------
+
+
+Q5: Why Promise runs before setTimeout?
+
+Answer:
+Because microtask queue has higher priority
+
+
+=========================================================
+END OF FILE
+=========================================================
+*/
