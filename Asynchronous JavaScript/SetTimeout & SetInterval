@@ -1,0 +1,30 @@
+# ⏱️ setTimeout & setInterval in JavaScript
+
+> "Timing in JavaScript isn’t about delay — it’s about scheduling."
+
+---
+
+## 🚀 Introduction
+
+JavaScript provides built-in timer functions to execute code after a delay  
+or repeatedly over time.
+
+👉 The two most important timer functions are:
+
+- `setTimeout()` → runs once after delay  
+- `setInterval()` → runs repeatedly  
+
+---
+
+## ⏳ setTimeout()
+
+### 📌 Definition
+
+`setTimeout()` executes a function **once after a specified delay**
+
+---
+
+### 🧠 Syntax
+
+```javascript
+setTimeout(callback, delay);
